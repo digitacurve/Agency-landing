@@ -77,7 +77,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
               Website URL <span className="text-slate-500 font-medium">(Optional)</span>
             </label>
             <input
-              type="url"
+              type="text"
               name="website"
               id={compact ? "hero-website" : "website"}
               placeholder="e.g. www.mybusiness.com.au"
