@@ -18,11 +18,11 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
 
   const formFields = (
     <>
-      {/* Hidden fields required by FormSubmit */}
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_subject" value="New Digitacurve Lead" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_next" value={nextUrl} />
+      {/* Hidden fields required by Web3Forms */}
+      <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE"} />
+      <input type="hidden" name="subject" value="New Digitacurve Lead" />
+      <input type="hidden" name="redirect" value={nextUrl} />
+      <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
 
       <div className={compact ? "space-y-4 text-left" : "space-y-6 text-left"}>
         {/* Name & Email Group */}
@@ -135,7 +135,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
           <h3 className="text-lg font-bold text-white mt-3 leading-tight tracking-tight">Stop Wasting Ad Spend</h3>
           <p className="text-[11px] text-slate-400 mt-1 font-medium">Claim your Quality Score review & negative keyword setup.</p>
         </div>
-        <form action="https://formsubmit.co/sale@digitacurve.com" method="POST">
+        <form action="https://api.web3forms.com/submit" method="POST">
           {formFields}
         </form>
       </div>
@@ -163,7 +163,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
         {/* Lead Form Box */}
         <div className="glass-panel p-6 sm:p-10 rounded-2xl border border-white/10 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-500 to-blue-500" />
-          <form action="https://formsubmit.co/sale@digitacurve.com" method="POST">
+          <form action="https://api.web3forms.com/submit" method="POST">
             {formFields}
           </form>
         </div>

@@ -5,14 +5,14 @@ import { Sparkles, CheckCircle2, MessageSquare, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function ThankYouPage() {
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(2);
   const whatsappUrl = "https://wa.me/917572094201?text=Hi%20Digitacurve%2C%20I%20just%20submitted%20my%20details%20for%20the%20Free%20Google%20Ads%20Audit.%20Let's%20connect%20and%20identify%20wasted%20spend.";
 
   useEffect(() => {
     // Redirect logic
     const redirectTimer = setTimeout(() => {
       window.location.href = whatsappUrl;
-    }, 3000);
+    }, 2000);
 
     // Countdown interval
     const interval = setInterval(() => {
