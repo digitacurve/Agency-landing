@@ -9,50 +9,12 @@ interface AuditFormProps {
 
 export default function AuditForm({ compact = false }: AuditFormProps) {
   const [nextUrl, setNextUrl] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setNextUrl(window.location.origin + "/thank-you");
     }
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const payload = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      whatsapp: formData.get("whatsapp"),
-      website: formData.get("website"),
-      service: formData.get("service") || "Google Ads",
-      _subject: "New Digitacurve Lead",
-    };
-
-    try {
-      // 2.5-second timeout for server response fallback
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2500);
-
-      await fetch("https://formsubmit.co/ajax/sale@digitacurve.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-    } catch (error) {
-      console.error("FormSubmit AJAX failed/timed out, proceeding with redirect:", error);
-    }
-
-    // Direct redirect to thank you page (triggers fast WhatsApp redirect)
-    window.location.href = nextUrl;
-  };
 
   const formFields = (
     <>
@@ -145,11 +107,10 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
         {/* Submission Button */}
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base font-extrabold text-slate-950 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/25 cursor-pointer active:scale-[0.99] mt-4 disabled:opacity-75 disabled:cursor-not-allowed"
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base font-extrabold text-slate-950 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/25 cursor-pointer active:scale-[0.99] mt-4"
         >
           <Send className="w-4 h-4 text-slate-950" />
-          <span>{isSubmitting ? "Please wait..." : "Get Free Audit"}</span>
+          <span>Get Free Audit</span>
         </button>
 
         {/* Privacy lock indicator */}
@@ -173,7 +134,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
           <h3 className="text-lg font-bold text-white mt-3 leading-tight tracking-tight">Stop Wasting Ad Spend</h3>
           <p className="text-[11px] text-slate-400 mt-1 font-medium">Claim your Quality Score review & negative keyword setup.</p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form action="https://formspree.io/f/xeedbpkb" method="POST">
           {formFields}
         </form>
       </div>
@@ -201,7 +162,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
         {/* Lead Form Box */}
         <div className="glass-panel p-6 sm:p-10 rounded-2xl border border-white/10 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-500 to-blue-500" />
-          <form onSubmit={handleSubmit}>
+          <form action="https://formspree.io/f/xeedbpkb" method="POST">
             {formFields}
           </form>
         </div>
