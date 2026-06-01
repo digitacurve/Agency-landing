@@ -1,5 +1,5 @@
 import React from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -128,9 +128,16 @@ export default function Footer() {
                 </span>
               </li>
               <li className="flex gap-3 items-center">
-                <Phone className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <a href="tel:7572094201" className="hover:text-orange-500 transition-colors text-slate-200 font-bold">
-                  +1 757 209 4201
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-orange-500 flex-shrink-0">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                <a
+                  href="https://wa.me/917572094201?text=Hi%20Digitacurve%2C%20I'm%20inquiring%20about%20your%20Melbourne%20Google%20Ads%20services."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-500 transition-colors text-slate-200 font-bold"
+                >
+                  +91 75720 94201
                 </a>
               </li>
               <li className="flex gap-3 items-center">

@@ -8,7 +8,7 @@ export default function SchemaMarkup() {
     "image": "https://www.digitacurve.com/images/google-ads-melbourne-og.png",
     "@id": "https://www.digitacurve.com/google-ads-melbourne#localbusiness",
     "url": "https://www.digitacurve.com/google-ads-melbourne",
-    "telephone": "+17572094201",
+    "telephone": "+917572094201",
     "email": "sale@digitacurve.com",
     "priceRange": "$$",
     "address": {

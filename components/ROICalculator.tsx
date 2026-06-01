@@ -23,7 +23,7 @@ export default function ROICalculator() {
   const projectedCpl = Math.round(spend / projectedLeads);
 
   const scrollToForm = () => {
-    const element = document.getElementById("audit-form-section");
+    const element = document.getElementById("hero-audit-form");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
