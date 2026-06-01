@@ -9,6 +9,7 @@ import PainPoints from "@/components/PainPoints";
 import AuditForm from "@/components/AuditForm";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 export default function Home() {
   return (
@@ -44,6 +45,9 @@ export default function Home() {
 
       {/* Physical Coordinates & Links Footer */}
       <Footer />
+
+      {/* Floating WhatsApp Bubble */}
+      <FloatingWhatsApp />
     </>
   );
 }
