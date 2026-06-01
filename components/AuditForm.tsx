@@ -9,6 +9,7 @@ interface AuditFormProps {
 
 export default function AuditForm({ compact = false }: AuditFormProps) {
   const [nextUrl, setNextUrl] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -16,13 +17,49 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
     }
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      whatsapp: formData.get("whatsapp"),
+      website: formData.get("website"),
+      service: formData.get("service") || "Google Ads",
+      _subject: "New Digitacurve Lead",
+    };
+
+    try {
+      // 2.5-second timeout for server response fallback
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+      await fetch("https://formsubmit.co/ajax/sale@digitacurve.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+    } catch (error) {
+      console.error("FormSubmit AJAX failed/timed out, proceeding with redirect:", error);
+    }
+
+    // Direct redirect to thank you page (triggers fast WhatsApp redirect)
+    window.location.href = nextUrl;
+  };
+
   const formFields = (
     <>
-      {/* Hidden fields required by Web3Forms */}
-      <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE"} />
-      <input type="hidden" name="subject" value="New Digitacurve Lead" />
-      <input type="hidden" name="redirect" value={nextUrl} />
-      <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+      {/* Hidden fields required by FormSubmit */}
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_subject" value="New Digitacurve Lead" />
+      <input type="hidden" name="_next" value={nextUrl} />
 
       <div className={compact ? "space-y-4 text-left" : "space-y-6 text-left"}>
         {/* Name & Email Group */}
@@ -108,10 +145,11 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
         {/* Submission Button */}
         <button
           type="submit"
-          className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base font-extrabold text-slate-950 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/25 cursor-pointer active:scale-[0.99] mt-4"
+          disabled={isSubmitting}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base font-extrabold text-slate-950 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/25 cursor-pointer active:scale-[0.99] mt-4 disabled:opacity-75 disabled:cursor-not-allowed"
         >
           <Send className="w-4 h-4 text-slate-950" />
-          <span>Get Free Audit</span>
+          <span>{isSubmitting ? "Please wait..." : "Get Free Audit"}</span>
         </button>
 
         {/* Privacy lock indicator */}
@@ -135,7 +173,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
           <h3 className="text-lg font-bold text-white mt-3 leading-tight tracking-tight">Stop Wasting Ad Spend</h3>
           <p className="text-[11px] text-slate-400 mt-1 font-medium">Claim your Quality Score review & negative keyword setup.</p>
         </div>
-        <form action="https://api.web3forms.com/submit" method="POST">
+        <form onSubmit={handleSubmit}>
           {formFields}
         </form>
       </div>
@@ -163,7 +201,7 @@ export default function AuditForm({ compact = false }: AuditFormProps) {
         {/* Lead Form Box */}
         <div className="glass-panel p-6 sm:p-10 rounded-2xl border border-white/10 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-500 to-blue-500" />
-          <form action="https://api.web3forms.com/submit" method="POST">
+          <form onSubmit={handleSubmit}>
             {formFields}
           </form>
         </div>
