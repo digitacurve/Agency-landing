@@ -1,5 +1,5 @@
-import React from "react";
 import { Mail, MapPin } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -59,13 +59,8 @@ export default function Footer() {
           
           {/* Col 1: Brand & Intro */}
           <div className="md:col-span-5 flex flex-col items-start text-left">
-            <a href="#" className="flex items-center gap-2 group mb-6">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-orange-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                D
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white">
-                Digita<span className="text-orange-500">curve</span>
-              </span>
+            <a href="#" className="group mb-6 block">
+              <Logo size="md" />
             </a>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm mb-6 font-medium">
               We engineer high-performance Google Ads campaigns custom-tailored for Melbourne companies. Stop leaking ad spend and start securing qualified inquiries.
