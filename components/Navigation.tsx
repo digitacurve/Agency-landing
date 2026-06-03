@@ -40,6 +40,10 @@ export default function Navigation() {
         top: offsetPosition,
         behavior: "smooth"
       });
+
+      // Update URL hash in address bar without causing default jump
+      window.history.pushState(null, "", targetId);
+
       setMobileOpen(false);
     }
   };
@@ -56,6 +60,10 @@ export default function Navigation() {
         top: offsetPosition,
         behavior: "smooth"
       });
+
+      // Update URL hash in address bar for audit form
+      window.history.pushState(null, "", "#hero-audit-form");
+
       setMobileOpen(false);
     }
   };
