@@ -7,6 +7,15 @@ import Logo from "./Logo";
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  const menuItems = [
+    { label: "Services", href: "#services-section" },
+    { label: "ROI Calculator", href: "#calculator-section" },
+    { label: "Why Us", href: "#why-us-section" },
+    { label: "FAQ", href: "#faq-section" },
+    { label: "Contact", href: "#audit-form-section" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,13 +29,51 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuItems = [
-    { label: "Services", href: "#services-section" },
-    { label: "ROI Calculator", href: "#calculator-section" },
-    { label: "Why Us", href: "#why-us-section" },
-    { label: "FAQ", href: "#faq-section" },
-    { label: "Contact", href: "#audit-form-section" },
-  ];
+  // Scroll spy to highlight active menu item and dynamically update address bar hash on scroll
+  useEffect(() => {
+    const handleScrollSpy = () => {
+      const scrollPosition = window.scrollY + 120; // Account for header offset + buffer
+
+      // Check if we are close to the bottom of the page
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+      if (isAtBottom) {
+        setActiveSection("#audit-form-section");
+        window.history.replaceState(null, "", "#audit-form-section");
+        return;
+      }
+
+      let currentActive = "";
+      for (const item of menuItems) {
+        const el = document.querySelector(item.href);
+        if (el) {
+          const top = (el as HTMLElement).offsetTop;
+          const height = (el as HTMLElement).offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentActive = item.href;
+            break;
+          }
+        }
+      }
+
+      // Clear hash if near the top
+      if (window.scrollY < 50) {
+        currentActive = "";
+      }
+
+      if (currentActive && activeSection !== currentActive) {
+        setActiveSection(currentActive);
+        window.history.replaceState(null, "", currentActive);
+      } else if (!currentActive && window.scrollY < 50 && activeSection !== "") {
+        setActiveSection("");
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollSpy);
+    handleScrollSpy(); // Initial run on mount
+
+    return () => window.removeEventListener("scroll", handleScrollSpy);
+  }, [activeSection]);
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
@@ -41,8 +88,9 @@ export default function Navigation() {
         behavior: "smooth"
       });
 
-      // Update URL hash in address bar without causing default jump
+      // Update URL hash immediately
       window.history.pushState(null, "", targetId);
+      setActiveSection(targetId);
 
       setMobileOpen(false);
     }
@@ -61,9 +109,7 @@ export default function Navigation() {
         behavior: "smooth"
       });
 
-      // Update URL hash in address bar for audit form
       window.history.pushState(null, "", "#hero-audit-form");
-
       setMobileOpen(false);
     }
   };
@@ -79,7 +125,16 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="group shrink-0">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              window.history.pushState(null, "", window.location.pathname);
+              setActiveSection("");
+            }}
+            className="group shrink-0"
+          >
             <Logo size="md" />
           </a>
 
@@ -90,7 +145,11 @@ export default function Navigation() {
                 <a
                   href={item.href}
                   onClick={(e) => handleScrollTo(e, item.href)}
-                  className="text-sm font-semibold text-slate-300 hover:text-orange-500 transition-colors cursor-pointer"
+                  className={`text-sm font-semibold transition-colors cursor-pointer ${
+                    activeSection === item.href
+                      ? "text-orange-500 font-bold"
+                      : "text-slate-300 hover:text-orange-500"
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -133,7 +192,11 @@ export default function Navigation() {
                   <a
                     href={item.href}
                     onClick={(e) => handleScrollTo(e, item.href)}
-                    className="block px-4 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5 hover:text-orange-500 rounded-lg transition-all"
+                    className={`block px-4 py-2.5 text-sm font-semibold rounded-lg transition-all ${
+                      activeSection === item.href
+                        ? "bg-orange-500/10 text-orange-500"
+                        : "text-slate-300 hover:bg-white/5 hover:text-orange-500"
+                    }`}
                   >
                     {item.label}
                   </a>
@@ -146,3 +209,4 @@ export default function Navigation() {
     </header>
   );
 }
+
