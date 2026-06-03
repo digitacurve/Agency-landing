@@ -25,6 +25,7 @@ export default function Navigation() {
     { label: "ROI Calculator", href: "#calculator-section" },
     { label: "Why Us", href: "#why-us-section" },
     { label: "FAQ", href: "#faq-section" },
+    { label: "Contact", href: "#audit-form-section" },
   ];
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
