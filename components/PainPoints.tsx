@@ -31,7 +31,7 @@ export default function PainPoints() {
   ];
 
   return (
-    <section className="relative py-24 bg-slate-950 bg-grid-pattern border-t border-white/5">
+    <section id="why-us-section" className="relative py-24 bg-slate-950 bg-grid-pattern border-t border-white/5">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-orange-500/5 blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

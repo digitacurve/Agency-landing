@@ -30,7 +30,7 @@ export default function ROICalculator() {
   };
 
   return (
-    <section className="relative py-24 bg-slate-900 border-y border-white/5 overflow-hidden">
+    <section id="calculator-section" className="relative py-24 bg-slate-900 border-y border-white/5 overflow-hidden">
       <div className="absolute inset-0 bg-dot-pattern opacity-30" />
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
